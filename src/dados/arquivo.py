@@ -7,7 +7,7 @@ T = TypeVar('T')
 
 
 class Arquivo(IOperacaoDados, Generic[T]):
-    def __init__(self, nome_arquivo: str = None, texto: str = None) -> None:
+    def __init__(self, nome_arquivo: str = None) -> None:
         """_summary_
 
         Args:
@@ -15,7 +15,6 @@ class Arquivo(IOperacaoDados, Generic[T]):
         """
         self._nome_arquivo = nome_arquivo
         self._caminho_base = os.getcwd()
-        self._nome_arquivo = nome_arquivo
 
         self._caminho_arquivo = os.path.join(
             self._caminho_base, 'docs', nome_arquivo) if nome_arquivo is not None else os.path.join(

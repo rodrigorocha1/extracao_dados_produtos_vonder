@@ -52,17 +52,8 @@ class ExcelDados(Arquivo[Workbook]):
         Yields:
             Generator[Tuple[str, str], None, None]: Gerador que retorna a url e o nome do vídeo
         """
-        for linha in self.__aba.iter_rows(min_row=2, max_col=3):
-            url, nome_video, marcador = linha[:3]
 
-            if marcador.value != 'X':
-                try:
-                    logger.info(
-                        f'Fazendo resumo {url.value}  {nome_video.value} {marcador.value}')
-                    yield url.value.split('=')[-1], self.__tratar_texto(nome_video.value)
-
-                except:
-                    break
+        return self.__aba.iter_rows(min_row=2)
 
     def gravar_dados(self,):
         try:
