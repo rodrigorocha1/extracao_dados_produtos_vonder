@@ -49,7 +49,7 @@ navegador.find_element(By.CLASS_NAME, 'descricaoProd').text
 elemento = navegador.find_element(By.CLASS_NAME, 'descricaoProd')
 
 # Extrai o HTML do elemento
-html_elemento = elemento.get_attribute('outerHTML')
+html_elemento = elemento.get_attribute('outerHTML')  # descrição html
 
 
 elemento = navegador.find_element(By.CLASS_NAME, 'breadCrumb')
@@ -57,7 +57,7 @@ elemento = navegador.find_element(By.CLASS_NAME, 'breadCrumb')
 html_elemento = elemento.get_attribute('outerHTML')
 
 '|'.join(navegador.find_element(By.CLASS_NAME,
-                                'breadCrumb').text.split('|')[2:4]).replace('\n', '')
+                                'breadCrumb').text.split('|')[2:4]).replace('\n', '')  # categoria
 
 
 imagens = navegador.find_elements(By.CLASS_NAME, 'selected')
