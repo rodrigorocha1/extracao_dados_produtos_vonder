@@ -7,7 +7,7 @@ class Utils(Arquivo):
     def __init__(self, nome_arquivo=None, diretorio=None):
         super().__init__(nome_arquivo, diretorio)
 
-    def salvar_imagem_local(self, url: str):
+    def salvar_dados(self, url: str):
         url = url.replace('https', 'http')
 
         response = requests.get(url, verify=False, timeout=10)
