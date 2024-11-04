@@ -1,16 +1,16 @@
 import requests
 import os
+from src.dados.arquivo import Arquivo
 
 
-class Utils:
+class Utils(Arquivo):
+    def __init__(self, nome_arquivo=None, diretorio=None):
+        super().__init__(nome_arquivo, diretorio)
 
-    def salvar_imagem_local(self, url: str, nome_arquivo: str):
+    def salvar_imagem_local(self, url: str):
         url = url.replace('https', 'http')
-
-        caminho_base = os.getcwd()
-        caminho_aquivo = os.path.join(caminho_base, 'img', nome_arquivo)
 
         response = requests.get(url, verify=False, timeout=10)
         if response.status_code == 200:
-            with open(caminho_aquivo, "wb") as file:
+            with open(self._caminho_arquivo, "wb") as file:
                 file.write(response.content)
