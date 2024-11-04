@@ -62,8 +62,10 @@ html_elemento = elemento.get_attribute('outerHTML')
 
 imagens = navegador.find_elements(By.CLASS_NAME, 'selected')
 len(imagens)
-for imagem in imagens:
-    print(imagem.find_element(By.TAG_NAME, 'img').get_attribute('src'))
-    print(imagem.find_element(By.TAG_NAME,
-          'img').get_attribute('src').split('/')[-1])
-navegador.quit()
+for chave, imagem in enumerate(imagens):
+    imagem_pequena = imagem.find_element(By.TAG_NAME, 'img').click()
+    imagem_grande = navegador.find_element(
+        By.ID, 'imgProd1').get_attribute('src')
+    print(imagem_grande)
+    if chave == 1:
+        break

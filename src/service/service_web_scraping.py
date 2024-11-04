@@ -38,10 +38,12 @@ class ServiceWebScaping:
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
         imagens = self.__navegador.find_elements(By.CLASS_NAME, 'selected')
         for imagem in imagens:
-            url = imagem.find_element(By.TAG_NAME, 'img').get_attribute('src')
-            nome_arquivo = imagem.find_element(By.TAG_NAME,
-                                               'img').get_attribute('src').split('/')[-1]
-            yield url, nome_arquivo
+            imagem.find_element(By.TAG_NAME, 'img').click()
+            url_imagem_grande = self.__navegador.find_element(
+                By.ID, 'imgProd1').get_attribute('src')
+            nome_arquivo = url_imagem_grande.split('/')[-1]
+
+            yield url_imagem_grande, nome_arquivo
 
     def fechar_navegador(self):
         self.__navegador.quit()
