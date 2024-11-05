@@ -17,20 +17,6 @@ class ExcelDados(Arquivo[Workbook]):
         self.__aba = self.__planilha[self.__nome_aba]
         self.__ultima_linha = self.__aba.max_row
 
-    # def __init__(self, nome_arquivo=None, diretorio=None):
-    #     super().__init__(nome_arquivo, diretorio)
-    #     self.__planilha = self._abrir_arquivo()
-    #     self.__nome_aba = self.__planilha.active.title
-    #     self.__aba = self.__planilha[self.__nome_aba]
-    #     self.__ultima_linha = self.__aba.max_row
-
-    # def __init__(self, nome_arquivo: str = None) -> None:
-    #     super().__init__(nome_arquivo)
-    #     self.__planilha = self._abrir_arquivo()
-    #     self.__nome_aba = self.__planilha.active.title
-    #     self.__aba = self.__planilha[self.__nome_aba]
-    #     self.__ultima_linha = self.__aba.max_row
-
     def _abrir_arquivo(self) -> Workbook:
         """Método para abrir a planilha
 
