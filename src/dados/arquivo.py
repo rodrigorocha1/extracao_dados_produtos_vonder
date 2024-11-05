@@ -15,10 +15,27 @@ class Arquivo(IOperacaoDados, Generic[T]):
         """
         self._nome_arquivo = nome_arquivo
         self._caminho_base = os.getcwd()
+        self._diretorio = diretorio
 
         self._caminho_arquivo = os.path.join(
-            self._caminho_base, diretorio, nome_arquivo) if nome_arquivo is not None else os.path.join(
-            self._caminho_base, diretorio)
+            self._caminho_base, self._diretorio, nome_arquivo) if nome_arquivo is not None else os.path.join(
+            self._caminho_base, self._diretorio)
+
+    @property
+    def nome_arquivo(self):
+        return self._nome_arquivo
+
+    @nome_arquivo.setter
+    def nome_arquivo(self, nome_arquivo):
+        self._nome_arquivo = nome_arquivo
+
+    @property
+    def diretorio(self):
+        return self._diretorio
+
+    @diretorio.setter
+    def diretorio(self, diretorio):
+        self._diretorio = diretorio
 
     @abstractmethod
     def ler_valores(self) -> Generator[Tuple[str, str], None, None]:
@@ -30,21 +47,7 @@ class Arquivo(IOperacaoDados, Generic[T]):
         pass
 
     @abstractmethod
-    def _abrir_arquivo(self) -> T:
-        """_summary_
-
-        Returns:
-            T: Retorna o arquivo aberto
-        """
-        pass
-
-    @abstractmethod
     def gravar_dados(self):
         """Método para gravar dados
         """
-        pass
-
-    @abstractmethod
-    def salvar_dados(self):
-
         pass

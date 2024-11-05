@@ -1,8 +1,10 @@
-from src.dados.arquivo_excel import ExcelDados
+from src.dados.excel_dados import ExcelDados
 
 
 ed = ExcelDados(
-    nome_arquivo='planilha_produtos.xlsx'
+    nome_arquivo='planilha_produtos.xlsx',
+    diretorio='docs'
+
 )
 
 

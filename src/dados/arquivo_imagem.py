@@ -12,13 +12,7 @@ class ArquivoImagem(Arquivo[bytes]):
     def ler_valores(self):
         pass
 
-    def _abrir_arquivo(self) -> bytes:
-        pass
-
     def gravar_dados(self):
-        pass
-
-    def salvar_dados(self):
         self.__url = self.__url.replace('https', 'http')
 
         response = requests.get(self.__url, verify=False, timeout=10)
