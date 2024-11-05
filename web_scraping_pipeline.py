@@ -19,6 +19,7 @@ class WebScrapingPipeline:
                 codigo_produto=codpro.value)
             produtos = self.__servico_web_scraping.extrair_dados()
             print(produtos)
+            print(len(produtos))
             # for produto in produtos:
             #     print(produto)
 
