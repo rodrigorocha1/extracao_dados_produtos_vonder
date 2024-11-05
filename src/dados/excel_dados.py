@@ -15,7 +15,7 @@ class ExcelDados(Arquivo[Workbook]):
         self.__planilha = self._abrir_arquivo()
         self.__nome_aba = self.__planilha.active.title
         self.__aba = self.__planilha[self.__nome_aba]
-        self.__ultima_linha = self.__aba.max_row
+        self.__ultima_linha = self.__aba.max_row + 1
 
     def _abrir_arquivo(self) -> Workbook:
         """Método para abrir a planilha
@@ -41,21 +41,21 @@ class ExcelDados(Arquivo[Workbook]):
 
         return self.__aba.iter_rows(min_row=2)
 
-    def __escrever_dados(self,):
+    def __escrever_dados(self, valores):
         try:
             ws = self.__planilha.active
-            for linha in range(1, self.__ultima_linha):
-                celula = ws.cell(row=linha, column=3)
-                if celula.value is None or celula.value == '':
-                    celula.value = 'X'
+            coluna_inicial = 2
+            for i, valor in enumerate(valores):
+                ws.cell(row=self.__ultima_linha,
+                        column=coluna_inicial + i, value=valor)
 
         except Exception as e:
             logger.critical(f'ERRO FATAL: {e}')
             exit()
 
-    def gravar_dados(self):
+    def gravar_dados(self, valores):
         try:
-            self.__escrever_dados()
+            self.__escrever_dados(valores)
             self.__planilha.save(self._caminho_arquivo)
         except OSError as e:
             logger.error(f'Erro de sistema ao salvar o arquivo: {e}')

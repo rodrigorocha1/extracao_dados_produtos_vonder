@@ -1,4 +1,4 @@
-from typing import Generator, Tuple
+from typing import Generator, Tuple, List
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
@@ -24,7 +24,7 @@ class ServiceWebScaping:
         self.__clicar_propaganda()
         self.__navegador.find_element(By.CLASS_NAME, 'nomeProd').click()
 
-    def extrair_dados(self) -> Tuple[str, str, str, str]:
+    def extrair_dados(self) -> List[str]:
         url_produto = self.__navegador.current_url
         descricao_titulo = self.__navegador.find_element(By.CLASS_NAME, 'nomeProduto').text.replace(
             "\n", " ")
@@ -33,7 +33,7 @@ class ServiceWebScaping:
 
         categoria = '|'.join(self.__navegador.find_element(By.CLASS_NAME,
                                                            'breadCrumb').text.split('|')[2:4]).replace('\n', '')
-        return url_produto, descricao_titulo, elemento_html_descricao, categoria
+        return [url_produto, descricao_titulo, elemento_html_descricao, categoria]
 
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
         imagens = self.__navegador.find_elements(By.CLASS_NAME, 'selected')

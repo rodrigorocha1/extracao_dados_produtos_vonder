@@ -15,7 +15,7 @@ class IOperacaoDados(ABC):
         pass
 
     @abstractmethod
-    def gravar_dados(self, **kwargs):
+    def gravar_dados(self, valores):
         """Método para gravar dados
         """
         pass
