@@ -23,7 +23,8 @@ class WebScrapingPipeline:
             # for produto in produtos:
             #     print(produto)
 
-            # for url, imagem in self.__servico_web_scraping.obter_imagens():
+            for url, imagem in self.__servico_web_scraping.obter_imagens():
+                print(url, imagem)
 
             #     self.__utils.salvar_imagem_local(url=url, nome_arquivo=imagem)
 
