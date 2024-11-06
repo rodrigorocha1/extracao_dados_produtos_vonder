@@ -53,7 +53,6 @@ class ExcelDados(Arquivo[Workbook]):
         Yields:
             Generator[Tuple[str, str], None, None]: Gerador que retorna a url e o nome do vídeo
         """
-
         return self.__aba.iter_rows(min_row=2)
 
     def __escrever_dados(self, valores):
@@ -70,6 +69,11 @@ class ExcelDados(Arquivo[Workbook]):
             exit()
 
     def gravar_dados(self, valores):
+        """_summary_
+
+        Args:
+            valores (_type_): _description_
+        """
         try:
             self.__escrever_dados(valores)
             self.__planilha.save(self._caminho_arquivo)
