@@ -20,6 +20,7 @@ class WebScrapingPipeline:
             produtos = self.__servico_web_scraping.extrair_dados()
             print(produtos)
             print(len(produtos))
+            self.__arquivo_excel.gravar_dados(valores=produtos)
             # for produto in produtos:
             #     print(produto)
 

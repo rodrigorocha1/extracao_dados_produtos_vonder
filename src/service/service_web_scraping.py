@@ -12,11 +12,18 @@ class ServiceWebScaping:
         self.__navegador = webdriver.Chrome(service=self.__servico)
 
     def __clicar_propaganda(self):
-        self.__navegador.find_element(
-            By.CLASS_NAME, 'campanha-popup-close').click()
+        try:
+            self.__navegador.find_element(
+                By.CLASS_NAME, 'campanha-popup-close').click()
+        except:
+            pass
 
     def __abrir_navegador(self):
-        self.__navegador.maximize_window()
+
+        try:
+            self.__navegador.maximize_window()
+        except:
+            pass
 
     def pesquisar_produto(self, codigo_produto: str):
         self.__abrir_navegador()
@@ -27,12 +34,13 @@ class ServiceWebScaping:
 
     def extrair_dados(self) -> List[str]:
 
-        W = self.__navegador.find_element(By.CLASS_NAME, 'nomeProduto').text.replace(
-            "\n", " ")
         descricao_produto = self.__navegador.find_element(
             By.CLASS_NAME, 'descricaoProd').text.replace('\n', ' ')  # Descrição produto
 
         url_produto = self.__navegador.current_url
+
+        descricao_titulo = self.__navegador.find_element(By.CLASS_NAME, 'nomeProduto').text.replace(
+            "\n", " ")
 
         conteudo_embalagem = self.__navegador.find_element(By.CLASS_NAME, 'descricaoProd').text.replace(
             '\n', ' ')
@@ -54,7 +62,7 @@ class ServiceWebScaping:
         categoria = '|'.join(self.__navegador.find_element(By.CLASS_NAME,
                                                            'breadCrumb').text.split('|')[2:4]).replace('\n', '')
 
-        return [url_produto, descricao_produto, conteudo_embalagem, conteudo_embalagem_html, detalhes_tecnicos, certificados, certificados_html_descricao, categoria]
+        return [descricao_produto, url_produto, descricao_titulo, conteudo_embalagem, conteudo_embalagem_html, detalhes_tecnicos, certificados, certificados_html_descricao, categoria]
 
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
         imagens = self.__navegador.find_elements(By.CLASS_NAME, 'selected')

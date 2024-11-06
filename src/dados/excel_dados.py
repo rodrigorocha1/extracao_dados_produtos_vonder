@@ -15,7 +15,22 @@ class ExcelDados(Arquivo[Workbook]):
         self.__planilha = self._abrir_arquivo()
         self.__nome_aba = self.__planilha.active.title
         self.__aba = self.__planilha[self.__nome_aba]
-        self.__ultima_linha = self.__aba.max_row + 1
+        self.__ultima_linha = self.__aba.max_row
+
+    def __encontrar_proxima_linha_em_branco(self, coluna: str = 'B') -> int:
+        """Encontra a próxima linha em branco a partir de uma coluna específica.
+
+        Args:
+            coluna (str): A coluna onde verificar as células em branco.
+
+        Returns:
+            int: Número da próxima linha em branco.
+        """
+        for linha in range(2, self.__ultima_linha + 1):
+            if self.__aba[f"{coluna}{linha}"].value is None:
+                return linha
+
+        return self.__ultima_linha + 1
 
     def _abrir_arquivo(self) -> Workbook:
         """Método para abrir a planilha
@@ -43,12 +58,13 @@ class ExcelDados(Arquivo[Workbook]):
 
     def __escrever_dados(self, valores):
         try:
-            ws = self.__planilha.active
-            coluna_inicial = 2
-            for i, valor in enumerate(valores):
-                ws.cell(row=self.__ultima_linha,
-                        column=coluna_inicial + i, value=valor)
 
+            coluna_inicial = 2
+            linha_para_escrever = self.__encontrar_proxima_linha_em_branco()
+            for i, valor in enumerate(valores):
+                self.__planilha.active.cell(row=linha_para_escrever,
+                                            column=coluna_inicial + i, value=valor)
+            self.__ultima_linha = max(self.__ultima_linha, linha_para_escrever)
         except Exception as e:
             logger.critical(f'ERRO FATAL: {e}')
             exit()
@@ -57,6 +73,7 @@ class ExcelDados(Arquivo[Workbook]):
         try:
             self.__escrever_dados(valores)
             self.__planilha.save(self._caminho_arquivo)
+
         except OSError as e:
             logger.error(f'Erro de sistema ao salvar o arquivo: {e}')
             exit()

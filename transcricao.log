@@ -1,1 +1,3 @@
 2024-11-03 16:30:00,422 - src.pacote_log.config_log - CRITICAL - FALHA TOTAL: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm - arquivo_excel.py - _abrir_arquivo
+2024-11-05 22:33:47,777 - src.pacote_log.config_log - ERROR - Arquivo não encontrado - excel_dados.py - _abrir_arquivo
+2024-11-05 22:34:13,502 - src.pacote_log.config_log - ERROR - Arquivo não encontrado - excel_dados.py - _abrir_arquivo
