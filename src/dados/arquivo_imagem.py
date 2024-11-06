@@ -2,20 +2,21 @@ from typing import Generator, Tuple, Any
 from src.pacote_log.config_log import logger
 from src.dados.arquivo import Arquivo
 import requests
+import os
 
 
 class ArquivoImagem(Arquivo[bytes]):
-    def __init__(self, nome_arquivo=None, diretorio=None, url: str = None):
-        self.__url = url
+    def __init__(self, nome_arquivo=None, diretorio=None,):
+
         super().__init__(nome_arquivo, diretorio)
 
     def ler_valores(self):
         pass
 
-    def gravar_dados(self):
-        self.__url = self.__url.replace('https', 'http')
+    def gravar_dados(self, valores):
+        valores = valores.replace('https', 'http')
 
-        response = requests.get(self.__url, verify=False, timeout=10)
+        response = requests.get(valores, verify=False, timeout=10)
         if response.status_code == 200:
-            with open(self.__arquivo._caminho_arquivo, "wb") as file:
+            with open(os.path.join(self._caminho_arquivo, self._nome_arquivo), "wb") as file:
                 file.write(response.content)

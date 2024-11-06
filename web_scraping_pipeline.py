@@ -21,13 +21,11 @@ class WebScrapingPipeline:
             print(produtos)
             print(len(produtos))
             self.__arquivo_excel.gravar_dados(valores=produtos)
-            # for produto in produtos:
-            #     print(produto)
-
+            self.__arquivo_imagem.diretorio = 'img'
             for url, imagem in self.__servico_web_scraping.obter_imagens():
-                print(url, imagem)
+                self.__arquivo_imagem.nome_arquivo = imagem
 
-            #     self.__utils.salvar_imagem_local(url=url, nome_arquivo=imagem)
+                self.__arquivo_imagem.gravar_dados(url)
 
 
 if __name__ == '__main__':
