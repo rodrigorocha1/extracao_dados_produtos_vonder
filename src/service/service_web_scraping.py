@@ -1,3 +1,4 @@
+import re
 from typing import Generator, Tuple, List
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -25,15 +26,35 @@ class ServiceWebScaping:
         self.__navegador.find_element(By.CLASS_NAME, 'nomeProd').click()
 
     def extrair_dados(self) -> List[str]:
-        url_produto = self.__navegador.current_url
-        descricao_titulo = self.__navegador.find_element(By.CLASS_NAME, 'nomeProduto').text.replace(
+
+        W = self.__navegador.find_element(By.CLASS_NAME, 'nomeProduto').text.replace(
             "\n", " ")
-        elemento_html_descricao = self.__navegador.find_element(
+        descricao_produto = self.__navegador.find_element(
+            By.CLASS_NAME, 'descricaoProd').text.replace('\n', ' ')  # Descrição produto
+
+        url_produto = self.__navegador.current_url
+
+        conteudo_embalagem = self.__navegador.find_element(By.CLASS_NAME, 'descricaoProd').text.replace(
+            '\n', ' ')
+
+        conteudo_embalagem_html = self.__navegador.find_element(By.CLASS_NAME, 'descricaoProd').get_attribute(
+            'outerHTML')
+
+        detalhes_tecnicos = self.__navegador.find_element(
+            By.CLASS_NAME, 'abaContent').text.replace(':\n', ': ')  # Detalhes tecni
+
+        match = re.search(r'Certificados:.*', conteudo_embalagem)
+
+        certificados = match.group(
+            0) if match else ""
+
+        certificados_html_descricao = self.__navegador.find_element(
             By.CLASS_NAME, 'descricaoProd').get_attribute('outerHTML')
 
         categoria = '|'.join(self.__navegador.find_element(By.CLASS_NAME,
                                                            'breadCrumb').text.split('|')[2:4]).replace('\n', '')
-        return [url_produto, descricao_titulo, elemento_html_descricao, categoria]
+
+        return [url_produto, descricao_produto, conteudo_embalagem, conteudo_embalagem_html, detalhes_tecnicos, certificados, certificados_html_descricao, categoria]
 
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
         imagens = self.__navegador.find_elements(By.CLASS_NAME, 'selected')
