@@ -1,10 +1,10 @@
 from typing import Generator, Tuple
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
+from openpyxl.styles import Font, Border, Side, Alignment, PatternFill
 from src.pacote_log.config_log import logger
 from src.dados.arquivo import Arquivo
-from unidecode import unidecode
-import re
+
 import os
 
 
@@ -16,6 +16,13 @@ class ExcelDados(Arquivo[Workbook]):
         self.__nome_aba = self.__planilha.active.title
         self.__aba = self.__planilha[self.__nome_aba]
         self.__ultima_linha = self.__aba.max_row
+
+    def formatar_linhas(self, cell):
+        """Método para formatar tabela"""
+        cell.font = Font(bold=True, color="000000")
+        cell.border = Border(left=Side(style='thin'), right=Side(style='thin'),
+                             top=Side(style='thin'), bottom=Side(style='thin'))
+        cell.alignment = Alignment(horizontal="justify", vertical="center")
 
     def __encontrar_proxima_linha_em_branco(self, coluna: str = 'B') -> int:
         """Encontra a próxima linha em branco a partir de uma coluna específica.
@@ -55,14 +62,26 @@ class ExcelDados(Arquivo[Workbook]):
         """
         return self.__aba.iter_rows(min_row=2)
 
+    def __formatar_tabela(self, coluna_inicial, valores, linha_para_escrever):
+        for col in range(coluna_inicial, coluna_inicial + len(valores)):
+            col_letter = self.__aba.cell(row=1, column=col).column_letter
+
+            self.__aba.column_dimensions[col_letter].width = 40
+        self.__aba.row_dimensions[linha_para_escrever].height = 300
+
     def __escrever_dados(self, valores):
         try:
 
             coluna_inicial = 2
             linha_para_escrever = self.__encontrar_proxima_linha_em_branco()
+
+            self.__formatar_tabela(coluna_inicial=coluna_inicial,
+                                   valores=valores, linha_para_escrever=linha_para_escrever)
+
             for i, valor in enumerate(valores):
-                self.__planilha.active.cell(row=linha_para_escrever,
-                                            column=coluna_inicial + i, value=valor)
+
+                self.formatar_linhas(self.__planilha.active.cell(row=linha_para_escrever,
+                                                                 column=coluna_inicial + i, value=valor))
             self.__ultima_linha = max(self.__ultima_linha, linha_para_escrever)
         except Exception as e:
             logger.critical(f'ERRO FATAL: {e}')

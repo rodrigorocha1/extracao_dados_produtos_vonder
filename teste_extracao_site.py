@@ -89,3 +89,7 @@ for chave, imagem in enumerate(imagens):
     print(imagem_grande)
     if chave == 1:
         break
+
+
+imagem_pequena = navegador.find_element(
+    By.ID, 'imgProd1').get_attribute('src')

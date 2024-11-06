@@ -15,17 +15,18 @@ class WebScrapingPipeline:
         for dado in self.__arquivo_excel.ler_valores():
             codpro, *resto = dado
             print(codpro.value)
-            self.__servico_web_scraping.pesquisar_produto(
-                codigo_produto=codpro.value)
-            produtos = self.__servico_web_scraping.extrair_dados()
-            print(produtos)
-            print(len(produtos))
-            self.__arquivo_excel.gravar_dados(valores=produtos)
-            self.__arquivo_imagem.diretorio = 'img'
-            for url, imagem in self.__servico_web_scraping.obter_imagens():
-                self.__arquivo_imagem.nome_arquivo = imagem
+            if codpro.value is not None:
+                self.__servico_web_scraping.pesquisar_produto(
+                    codigo_produto=codpro.value)
+                produtos = self.__servico_web_scraping.extrair_dados()
+                print(produtos)
+                print(len(produtos))
+                self.__arquivo_excel.gravar_dados(valores=produtos)
+                self.__arquivo_imagem.diretorio = 'img'
+                for url, imagem in self.__servico_web_scraping.obter_imagens():
+                    self.__arquivo_imagem.nome_arquivo = imagem
 
-                self.__arquivo_imagem.gravar_dados(url)
+                    self.__arquivo_imagem.gravar_dados(url)
 
 
 if __name__ == '__main__':
