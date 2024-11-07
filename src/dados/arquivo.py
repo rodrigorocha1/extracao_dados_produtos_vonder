@@ -1,5 +1,5 @@
 from src.dados.ioperacoes_dados import IOperacaoDados
-from typing import Generator, Tuple, TypeVar, Generic
+from typing import Generator, Optional, Tuple, TypeVar, Generic
 from abc import abstractmethod
 import os
 
@@ -7,7 +7,7 @@ T = TypeVar('T')
 
 
 class Arquivo(IOperacaoDados, Generic[T]):
-    def __init__(self, nome_arquivo: str = None, diretorio: str = None) -> None:
+    def __init__(self, nome_arquivo: Optional[str] = None, diretorio: Optional[str] = None) -> None:
         """_summary_
 
         Args:
@@ -18,8 +18,13 @@ class Arquivo(IOperacaoDados, Generic[T]):
         self._diretorio = diretorio
 
         self._caminho_arquivo = os.path.join(
-            self._caminho_base, self._diretorio, nome_arquivo) if nome_arquivo is not None else os.path.join(
-            self._caminho_base, self._diretorio)
+            self._caminho_base,
+            self._diretorio or '',
+            nome_arquivo or ''
+        ) if nome_arquivo is not None else os.path.join(
+            self._caminho_base,
+            self._diretorio or ''
+        )
 
     @property
     def nome_arquivo(self):

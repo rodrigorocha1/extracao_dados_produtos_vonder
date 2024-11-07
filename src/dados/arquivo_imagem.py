@@ -13,7 +13,7 @@ class ArquivoImagem(Arquivo[Image.Image]):
         super().__init__(nome_arquivo, diretorio)
 
     @property
-    def url(self):
+    def url(self) -> str:
         return self.__url
 
     @url.setter
