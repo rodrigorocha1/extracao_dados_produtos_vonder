@@ -38,6 +38,10 @@ class Arquivo(IOperacaoDados, Generic[T]):
         self._diretorio = diretorio
 
     @abstractmethod
+    def abrir_arquivo(self) -> T:
+        pass
+
+    @abstractmethod
     def ler_valores(self) -> Generator[Tuple[str, str], None, None]:
         """Método para ler os dados de arquivo, banco
 

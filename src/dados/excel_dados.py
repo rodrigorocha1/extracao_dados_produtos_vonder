@@ -39,7 +39,7 @@ class ExcelDados(Arquivo[Workbook]):
 
         return self.__ultima_linha + 1
 
-    def _abrir_arquivo(self) -> Workbook:
+    def abrir_arquivo(self) -> Workbook:
         """Método para abrir a planilha
 
         Returns:
