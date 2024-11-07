@@ -5,13 +5,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
-    ElementClickInterceptedException,
     ElementNotInteractableException,
     NoSuchElementException,
     StaleElementReferenceException,
     WebDriverException
 )
 from src.pacote_log.config_log import logger
+from time import sleep
 
 
 class ServiceWebScaping:
@@ -24,11 +24,8 @@ class ServiceWebScaping:
         try:
             self.__navegador.find_element(
                 By.CLASS_NAME, 'campanha-popup-close').click()
-        except (NoSuchElementException, ElementClickInterceptedException) as e:
-            logger.warning(
-                f'Não foi possível clicar no pop up propapaganda: {e}')
-        except WebDriverException as e:
-            logger.error(f'Erro ao tentar fechar o pop up: {e}')
+        except Exception:
+            pass
 
     def __abrir_navegador(self):
 
@@ -84,14 +81,17 @@ class ServiceWebScaping:
             logger.error(f'Erro do WebDriver ao extrair dados: {e}')
 
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
+
         try:
             imagens = self.__navegador.find_elements(By.CLASS_NAME, 'selected')
             if imagens:
                 for imagem in imagens:
                     try:
                         imagem.find_element(By.TAG_NAME, 'img').click()
+                        sleep(5)
                         url_imagem_grande = self.__navegador.find_element(
-                            By.ID, 'imgProd1').get_attribute('src')
+                            By.CLASS_NAME, 'zoomWrapperImage').find_element(By.TAG_NAME, 'img').get_attribute('src')
+
                         nome_arquivo = url_imagem_grande.split('/')[-1]
                         yield url_imagem_grande, nome_arquivo
                     except (NoSuchElementException, ElementNotInteractableException) as e:

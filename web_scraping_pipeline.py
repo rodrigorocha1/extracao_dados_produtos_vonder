@@ -12,7 +12,7 @@ class WebScrapingPipeline:
             diretorio='docs',  nome_arquivo='planilha_produtos.xlsx',)
 
     def rodar_servico(self):
-        for dado in self.__arquivo_excel.ler_valores():
+        for chave, dado in enumerate(self.__arquivo_excel.ler_valores()):
             codpro, *resto = dado
             print(codpro.value)
             if codpro.value is not None:
@@ -23,6 +23,8 @@ class WebScrapingPipeline:
                 print(len(produtos))
                 self.__arquivo_excel.gravar_dados(valores=produtos)
                 self.__arquivo_imagem.diretorio = 'img'
+                if chave == 1:
+                    print()
                 for url, imagem in self.__servico_web_scraping.obter_imagens():
                     self.__arquivo_imagem.nome_arquivo = imagem
 

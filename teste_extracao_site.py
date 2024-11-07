@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 servico = Service(ChromeDriverManager().install())
 navegador = webdriver.Chrome(service=servico)
 navegador.maximize_window()
-url = 'https://www.vonder.com.br/busca/?departamento=%25%25&busca=7074000630'
+url = 'https://www.vonder.com.br/busca/?departamento=%25%25&busca=6220111211'
 navegador.get(url)
 
 navegador.find_element(By.CLASS_NAME, 'campanha-popup-close').click()
@@ -81,11 +81,14 @@ html_elemento = elemento.get_attribute('outerHTML')
 
 
 imagens = navegador.find_elements(By.CLASS_NAME, 'selected')
-len(imagens)
+
+imagem_teste = navegador.find_elements(By.CLASS_NAME, 'selected')
+
+len(imagem_teste)
 for chave, imagem in enumerate(imagens):
     imagem_pequena = imagem.find_element(By.TAG_NAME, 'img').click()
     imagem_grande = navegador.find_element(
-        By.ID, 'imgProd1').get_attribute('src')
+        By.ID, 'imgPrinc_1').get_attribute('src')
     print(imagem_grande)
     if chave == 1:
         break
@@ -93,3 +96,16 @@ for chave, imagem in enumerate(imagens):
 
 imagem_pequena = navegador.find_element(
     By.ID, 'imgProd1').get_attribute('src')
+
+
+elementos = navegador.find_elements(By.CLASS_NAME, 'selected')
+for elemento in elementos:
+    images = elemento.find_elements(By.TAG_NAME, 'img')
+    print(images)
+    for img in images:
+        # Aqui você pode fazer o que precisar com cada imagem
+        print(img.get_attribute('src'))
+
+
+navegador.find_element(
+    By.CLASS_NAME, 'zoomWrapperImage').find_element(By.TAG_NAME, 'img').get_attribute('src')

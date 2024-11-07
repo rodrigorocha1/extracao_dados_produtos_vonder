@@ -1,3 +1,93 @@
 2024-11-03 16:30:00,422 - src.pacote_log.config_log - CRITICAL - FALHA TOTAL: openpyxl does not support  file format, please check you can open it with Excel first. Supported formats are: .xlsx,.xlsm,.xltx,.xltm - arquivo_excel.py - _abrir_arquivo
 2024-11-05 22:33:47,777 - src.pacote_log.config_log - ERROR - Arquivo não encontrado - excel_dados.py - _abrir_arquivo
 2024-11-05 22:34:13,502 - src.pacote_log.config_log - ERROR - Arquivo não encontrado - excel_dados.py - _abrir_arquivo
+2024-11-06 21:20:14,800 - src.pacote_log.config_log - ERROR - Erro do WebDriver ao extrair dados: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=130.0.6723.116)
+Stacktrace:
+#0 0x5b60f71336da <unknown>
+#1 0x5b60f6c47f80 <unknown>
+#2 0x5b60f6c1e2ef <unknown>
+#3 0x5b60f6cc0eed <unknown>
+#4 0x5b60f6cd6f49 <unknown>
+#5 0x5b60f6cb8953 <unknown>
+#6 0x5b60f6c8772e <unknown>
+#7 0x5b60f6c8879e <unknown>
+#8 0x5b60f70fef1b <unknown>
+#9 0x5b60f7102eb8 <unknown>
+#10 0x5b60f70ec42c <unknown>
+#11 0x5b60f7103a37 <unknown>
+#12 0x5b60f70d0fef <unknown>
+#13 0x5b60f7121ad8 <unknown>
+#14 0x5b60f7121ca0 <unknown>
+#15 0x5b60f7132556 <unknown>
+#16 0x76cb8a494ac3 <unknown>
+ - service_web_scraping.py - pesquisar_produto
+2024-11-06 21:20:14,844 - src.pacote_log.config_log - ERROR - Erro do WebDriver ao extrair dados: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=130.0.6723.116)
+Stacktrace:
+#0 0x5b60f71336da <unknown>
+#1 0x5b60f6c47f80 <unknown>
+#2 0x5b60f6c1e2ef <unknown>
+#3 0x5b60f6cc0eed <unknown>
+#4 0x5b60f6cd6f49 <unknown>
+#5 0x5b60f6cb8953 <unknown>
+#6 0x5b60f6c8772e <unknown>
+#7 0x5b60f6c8879e <unknown>
+#8 0x5b60f70fef1b <unknown>
+#9 0x5b60f7102eb8 <unknown>
+#10 0x5b60f70ec42c <unknown>
+#11 0x5b60f7103a37 <unknown>
+#12 0x5b60f70d0fef <unknown>
+#13 0x5b60f7121ad8 <unknown>
+#14 0x5b60f7121ca0 <unknown>
+#15 0x5b60f7132556 <unknown>
+#16 0x76cb8a494ac3 <unknown>
+ - service_web_scraping.py - extrair_dados
+2024-11-06 21:22:19,648 - src.pacote_log.config_log - ERROR - Erro do WebDriver ao extrair dados: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=130.0.6723.116)
+Stacktrace:
+#0 0x629e65c7e6da <unknown>
+#1 0x629e65792f80 <unknown>
+#2 0x629e657692ef <unknown>
+#3 0x629e6580beed <unknown>
+#4 0x629e65821f49 <unknown>
+#5 0x629e65803953 <unknown>
+#6 0x629e657d272e <unknown>
+#7 0x629e657d379e <unknown>
+#8 0x629e65c49f1b <unknown>
+#9 0x629e65c4deb8 <unknown>
+#10 0x629e65c3742c <unknown>
+#11 0x629e65c4ea37 <unknown>
+#12 0x629e65c1bfef <unknown>
+#13 0x629e65c6cad8 <unknown>
+#14 0x629e65c6cca0 <unknown>
+#15 0x629e65c7d556 <unknown>
+#16 0x7e35ffc94ac3 <unknown>
+ - service_web_scraping.py - pesquisar_produto
+2024-11-06 21:22:19,672 - src.pacote_log.config_log - ERROR - Erro do WebDriver ao extrair dados: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=130.0.6723.116)
+Stacktrace:
+#0 0x629e65c7e6da <unknown>
+#1 0x629e65792f80 <unknown>
+#2 0x629e657692ef <unknown>
+#3 0x629e6580beed <unknown>
+#4 0x629e65821f49 <unknown>
+#5 0x629e65803953 <unknown>
+#6 0x629e657d272e <unknown>
+#7 0x629e657d379e <unknown>
+#8 0x629e65c49f1b <unknown>
+#9 0x629e65c4deb8 <unknown>
+#10 0x629e65c3742c <unknown>
+#11 0x629e65c4ea37 <unknown>
+#12 0x629e65c1bfef <unknown>
+#13 0x629e65c6cad8 <unknown>
+#14 0x629e65c6cca0 <unknown>
+#15 0x629e65c7d556 <unknown>
+#16 0x7e35ffc94ac3 <unknown>
+ - service_web_scraping.py - extrair_dados
+2024-11-06 22:06:45,726 - src.pacote_log.config_log - ERROR - Erro do WebDriver ao obter imagens: Message: 
+ - service_web_scraping.py - obter_imagens
