@@ -34,6 +34,7 @@ class ArquivoImagem(Arquivo[Image.Image]):
         response = requests.get(url, verify=False, timeout=10)
         if response.status_code == 200:
             return response.content
+        return None
 
     def gravar_dados(self, valores: bytes):
         valores = io.BytesIO(valores)
