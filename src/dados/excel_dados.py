@@ -1,21 +1,27 @@
-from typing import Generator, Tuple
+from typing import Generator, List, Tuple, Optional, TypeVar, Generic
 from openpyxl import load_workbook
 from openpyxl.workbook.workbook import Workbook
 from openpyxl.styles import Font, Border, Side, Alignment, PatternFill
 from src.pacote_log.config_log import logger
 from src.dados.arquivo import Arquivo
+from openpyxl.cell.cell import Cell
 
-import os
 
-
-class ExcelDados(Arquivo[Workbook]):
-
+class ExcelDados(Arquivo[Generator[Tuple[Cell, ...], None, None], List[str],  Workbook]):
     def __init__(self, nome_arquivo=None, diretorio=None):
         super().__init__(nome_arquivo, diretorio)
-        self.__planilha = self._abrir_arquivo()
-        self.__nome_aba = self.__planilha.active.title
-        self.__aba = self.__planilha[self.__nome_aba]
-        self.__ultima_linha = self.__aba.max_row
+        self.__planilha = self.abrir_arquivo()
+        if self.__planilha is not None:
+            self.__nome_aba = self.__planilha.active.title
+            self.__aba = self.__planilha[self.__nome_aba]
+            self.__ultima_linha = self.__aba.max_row
+        else:
+            self.__nome_aba = self.__aba = self.__ultima_linha = None
+
+    def abrir_arquivo(self) -> Workbook:
+        """Método para abrir a planilha"""
+        planilha = load_workbook(self._caminho_arquivo)
+        return planilha
 
     def formatar_linhas(self, cell):
         """Método para formatar tabela"""
@@ -39,27 +45,7 @@ class ExcelDados(Arquivo[Workbook]):
 
         return self.__ultima_linha + 1
 
-    def abrir_arquivo(self) -> Workbook:
-        """Método para abrir a planilha
-
-        Returns:
-            Workbook: uma planilha
-        """
-        try:
-            planilha = load_workbook(self._caminho_arquivo)
-            return planilha
-        except FileNotFoundError:
-            logger.error('Arquivo não encontrado')
-            exit()
-        except Exception as e:
-            logger.critical(f'FALHA TOTAL: {e}')
-
-    def ler_valores(self) -> Generator[Tuple[str], None, None]:
-        """Método para ler os dados de arquivo, banco
-
-        Yields:
-            Generator[Tuple[str, str], None, None]: Gerador que retorna a url e o nome do vídeo
-        """
+    def ler_valores(self) -> Generator[Tuple[Cell, ...], None, None]:
         return self.__aba.iter_rows(min_row=2)
 
     def __formatar_tabela(self, coluna_inicial, valores, linha_para_escrever):
@@ -69,7 +55,7 @@ class ExcelDados(Arquivo[Workbook]):
             self.__aba.column_dimensions[col_letter].width = 40
         self.__aba.row_dimensions[linha_para_escrever].height = 300
 
-    def __escrever_dados(self, valores):
+    def __escrever_dados(self, valores: List[str]):
         try:
 
             coluna_inicial = 2
@@ -87,12 +73,14 @@ class ExcelDados(Arquivo[Workbook]):
             logger.critical(f'ERRO FATAL: {e}')
             exit()
 
-    def gravar_dados(self, valores):
+    def gravar_dados(self, valores: List[str]):
         """_summary_
 
         Args:
             valores (_type_): _description_
+
         """
+
         try:
             self.__escrever_dados(valores)
             self.__planilha.save(self._caminho_arquivo)

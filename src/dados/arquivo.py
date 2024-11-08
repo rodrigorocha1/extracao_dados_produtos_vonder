@@ -50,7 +50,7 @@ class Arquivo(IOperacaoDados[T, U], Generic[T, U, V]):
         pass
 
     @abstractmethod
-    def abrir_arquivo(self) -> T:
+    def abrir_arquivo(self) -> V:
         pass
 
     @abstractmethod
