@@ -1,17 +1,20 @@
 from src.dados.ioperacoes_dados import IOperacaoDados
-from typing import Generator, Optional, Tuple, TypeVar, Generic
+from typing import Generator, Iterable, Optional, Tuple, TypeVar, Generic
 from abc import abstractmethod
 import os
 
 T = TypeVar('T')
+U = TypeVar('U')
+V = TypeVar('V')
 
 
-class Arquivo(IOperacaoDados, Generic[T]):
+class Arquivo(IOperacaoDados[T, U], Generic[T, U, V]):
+
     def __init__(self, nome_arquivo: Optional[str] = None, diretorio: Optional[str] = None) -> None:
         """_summary_
 
         Args:
-            nome_arquivo (str): nome do arquivo a ser aberto sem extensao 
+            nome_arquivo (str): nome do arquivo a ser aberto sem extensão
         """
         self._nome_arquivo = nome_arquivo
         self._caminho_base = os.getcwd()
@@ -27,36 +30,30 @@ class Arquivo(IOperacaoDados, Generic[T]):
         )
 
     @property
-    def nome_arquivo(self):
+    def nome_arquivo(self) -> Optional[str]:
         return self._nome_arquivo
 
     @nome_arquivo.setter
-    def nome_arquivo(self, nome_arquivo):
+    def nome_arquivo(self, nome_arquivo: str):
         self._nome_arquivo = nome_arquivo
 
     @property
-    def diretorio(self):
+    def diretorio(self) -> Optional[str]:
         return self._diretorio
 
     @diretorio.setter
-    def diretorio(self, diretorio):
+    def diretorio(self, diretorio: str):
         self._diretorio = diretorio
+
+    @abstractmethod
+    def ler_valores(self) -> T:
+        pass
 
     @abstractmethod
     def abrir_arquivo(self) -> T:
         pass
 
     @abstractmethod
-    def ler_valores(self) -> Generator[Tuple[str, str], None, None]:
-        """Método para ler os dados de arquivo, banco
+    def gravar_dados(self, valores: U) -> None:
 
-        Yields:
-            Generator[Tuple[str, str], None, None]: Gerador que retorna a url e o nome do vídeo
-        """
-        pass
-
-    @abstractmethod
-    def gravar_dados(self, valores):
-        """Método para gravar dados
-        """
         pass

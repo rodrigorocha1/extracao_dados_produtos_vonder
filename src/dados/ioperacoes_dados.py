@@ -1,21 +1,19 @@
 from abc import ABC, abstractmethod
-from typing import Generator, Iterable, Tuple
+from typing import TypeVar, Generic, Iterable
+
+# Definindo um TypeVar T que representará o tipo dos dados
+T = TypeVar('T')
+U = TypeVar('U')
 
 
-class IOperacaoDados(ABC):
+class IOperacaoDados(ABC, Generic[T, U]):
 
     @abstractmethod
-    def ler_valores(self) -> Generator[Tuple[str, str], None, None]:
-        """Método para ler os dados de arquivo, banco
-
-        Yields:
-            Generator[Tuple[str, str], None, None]: Gerador que retorna a url e o nome do vídeo
-        """
+    def ler_valores(self) -> T:
 
         pass
 
     @abstractmethod
-    def gravar_dados(self, valores):
-        """Método para gravar dados
-        """
+    def gravar_dados(self, valores: U) -> None:
+
         pass
