@@ -10,7 +10,7 @@ V = TypeVar('V')
 
 class Arquivo(IOperacaoDados[T, U], Generic[T, U, V]):
 
-    def __init__(self, nome_arquivo: Optional[str] = None, diretorio: Optional[str] = None) -> None:
+    def __init__(self, nome_arquivo: str, diretorio: Optional[str] = None) -> None:
         """_summary_
 
         Args:

@@ -6,20 +6,17 @@ import os
 import io
 from PIL import Image
 
-T = TypeVar('T', Image.Image, Image.Image)
-U = TypeVar('U', bytes, bytes)
 
-
-class ArquivoImagem(Arquivo[bytes, Image.Image]):
+class ArquivoImagem(Arquivo[bytes, bytes, Image.Image]):
     def __init__(self, nome_arquivo=None, diretorio=None):
         self.__url = None
         super().__init__(nome_arquivo, diretorio)
 
-    @property
+    @ property
     def url(self) -> str:
         return self.__url
 
-    @url.setter
+    @ url.setter
     def url(self, url: str):
         self.__url = url
 
@@ -37,9 +34,9 @@ class ArquivoImagem(Arquivo[bytes, Image.Image]):
 
         return response.content
 
-    # def gravar_dados(self, valores: bytes):
-    #     valores_io = io.BytesIO(valores)
-    #     imagem = Image.open(valores_io)
-    #     caminho_imagem = os.path.join(
-    #         self._caminho_arquivo, self._nome_arquivo)
-    #     imagem.save(caminho_imagem)
+    def gravar_dados(self, valores: bytes):
+        valores_io = io.BytesIO(valores)
+        imagem = Image.open(valores_io)
+        caminho_imagem = os.path.join(
+            self._caminho_arquivo, self._nome_arquivo)
+        imagem.save(caminho_imagem)
