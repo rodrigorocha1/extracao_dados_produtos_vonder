@@ -75,10 +75,13 @@ class ServiceWebScaping:
         except NoSuchElementException as e:
             logger.error(
                 f'Elemento não encontrado para extração de dados: {e}')
+            return []
         except StaleElementReferenceException as e:
             logger.error(f'Elemento não está mais no DOM: {e}')
+            return []
         except WebDriverException as e:
             logger.error(f'Erro do WebDriver ao extrair dados: {e}')
+            return []
 
     def obter_imagens(self) -> Generator[Tuple[str, str], None, None]:
 
