@@ -1,15 +1,14 @@
-from src.service.service_web_scraping import ServiceWebScaping
 from src.dados.arquivo_imagem import ArquivoImagem
 from src.dados.excel_dados import ExcelDados
+from src.service.service_web_scraping import ServiceWebScaping
+from src.dados.ioperacoes_dados import IOperacaoDados
 
 
 class WebScrapingPipeline:
-    def __init__(self,):
-        self.__servico_web_scraping = ServiceWebScaping()
-        self.__arquivo_imagem = ArquivoImagem(
-            diretorio='img',)
-        self.__arquivo_excel = ExcelDados(
-            diretorio='docs',  nome_arquivo='planilha_produtos.xlsx',)
+    def __init__(self, servico_web_scraping: ServiceWebScaping, arquivo_imagem: IOperacaoDados, arquivo_excel: IOperacaoDados):
+        self.__servico_web_scraping = servico_web_scraping
+        self.__arquivo_imagem = arquivo_imagem
+        self.__arquivo_excel = arquivo_excel
 
     def rodar_servico(self):
         for chave, dado in enumerate(self.__arquivo_excel.ler_valores()):
@@ -34,5 +33,11 @@ class WebScrapingPipeline:
 
 
 if __name__ == '__main__':
-    wsp = WebScrapingPipeline()
+    wsp = WebScrapingPipeline(
+        servico_web_scraping=ServiceWebScaping(),
+        arquivo_imagem=ArquivoImagem(
+            diretorio='img',),
+        arquivo_excel=ExcelDados(
+            diretorio='docs',  nome_arquivo='planilha_produtos.xlsx',)
+    )
     wsp.rodar_servico()

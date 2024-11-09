@@ -6,8 +6,10 @@ package main {
             
         }
 
-        WebScrapingPipeline  <|--  "1" src.service.ServiceWebScaping
-        WebScrapingPipeline <|-- "1" src.dados.IoperacaoDados
+        WebScrapingPipeline  <|--  "1" src.service.ServiceWebScaping : servico_web_scraping
+        WebScrapingPipeline <|-- "1" src.dados.IoperacaoDados : arquivo_imagem
+        WebScrapingPipeline <|-- "1" src.dados.IoperacaoDados : arquivo_excel
+
     package src {
         
         package dados {
