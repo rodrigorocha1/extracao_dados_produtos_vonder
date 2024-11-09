@@ -2,6 +2,7 @@ from src.dados.arquivo_imagem import ArquivoImagem
 from src.dados.excel_dados import ExcelDados
 from src.service.service_web_scraping import ServiceWebScaping
 from src.dados.ioperacoes_dados import IOperacaoDados
+from src.pacote_log.config_log import logger
 
 
 class WebScrapingPipeline:
@@ -11,15 +12,16 @@ class WebScrapingPipeline:
         self.__arquivo_excel = arquivo_excel
 
     def rodar_servico(self):
+        logger.info(f'Inicio Web Scraping')
         for chave, dado in enumerate(self.__arquivo_excel.ler_valores()):
             codpro, *resto = dado
-            print(codpro.value)
+
             if codpro.value is not None:
+                logger.info(f'Extração do produto {codpro.value}')
                 self.__servico_web_scraping.pesquisar_produto(
                     codigo_produto=codpro.value)
                 produtos = self.__servico_web_scraping.extrair_dados()
-                print(produtos)
-                print(len(produtos))
+
                 self.__arquivo_excel.gravar_dados(valores=produtos)
                 self.__arquivo_imagem.diretorio = 'img'
                 if chave == 1:
@@ -30,6 +32,7 @@ class WebScrapingPipeline:
                     dados = self.__arquivo_imagem.ler_valores()
 
                     self.__arquivo_imagem.gravar_dados(dados)
+        logger.info(f'Fim Web Scraping')
 
 
 if __name__ == '__main__':
