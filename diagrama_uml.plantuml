@@ -1,13 +1,20 @@
 @startuml
 
 package main {
-    package src {
+    class WebScrapingPipeline {
+            + rodar_servico()
+            
+        }
 
+        WebScrapingPipeline  <|--  "1" src.service.ServiceWebScaping
+        WebScrapingPipeline <|-- "1" src.dados.IoperacaoDados
+    package src {
+        
         package dados {
 
-            interface IoperacaoDados {
-                + void {abstract} ler_valores()
-                + void {abstract}  gravar_dados(dados)
+            interface IoperacaoDados<T, U> {
+                + void {abstract} ler_valores() : T
+                + void {abstract} gravar_dados(dados: U)
               
             }
 
@@ -16,6 +23,8 @@ package main {
                 # String caminho_base
                 # String diretorio
                 # String caminho_arquivo
+
+                ~ void {abstract} abrir_arquivo()
                 
             }
 
@@ -25,21 +34,33 @@ package main {
                 - String aba
                 - Integer ultima_lina
 
-                ~ encontrar_proxima_linha_em_branco(String coluna)
-                ~ abrir_arquivo()
-                ~ formatar_tabela(coluna_inicial, valores, linha_para_escrever)
-                ~ escrever_dados(valores)
+                ~ formatar_linhas(cell)
+                ~ encontrar_proxima_linha_em_branco(String coluna) : Integer
+                ~ formatar_tabela(coluna: Integer, valores: List[str], linha_para_escrever: Integer)
+                ~ escrever_dados(valores: List[str])
+
+      
             }
 
             class ArquivoImagem extends Arquivo {
-                
+                - String url
             }
 
         }
 
         package service {
 
-           
+           class ServiceWebScaping {
+                - servico
+                - navegador
+
+                ~ void clicar_propaganda()
+                ~ void abrir_navegador()
+                + void pesquisar_produto(codigo_produto: String)
+                + extrair_dados() : List[str]
+                + obter_imagens() : Generator[Tuple[str, str], None, None]
+                + void fechar_navegador()
+           }
 
         }
 

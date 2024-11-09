@@ -27,8 +27,10 @@ class WebScrapingPipeline:
                     print()
                 for url, imagem in self.__servico_web_scraping.obter_imagens():
                     self.__arquivo_imagem.nome_arquivo = imagem
+                    self.__arquivo_imagem.url = url
+                    dados = self.__arquivo_imagem.ler_valores()
 
-                    self.__arquivo_imagem.gravar_dados(url)
+                    self.__arquivo_imagem.gravar_dados(dados)
 
 
 if __name__ == '__main__':

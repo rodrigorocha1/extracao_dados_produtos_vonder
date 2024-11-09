@@ -23,7 +23,7 @@ class ExcelDados(Arquivo[Generator[Tuple[Cell, ...], None, None], List[str],  Wo
         planilha = load_workbook(self._caminho_arquivo)
         return planilha
 
-    def formatar_linhas(self, cell):
+    def __formatar_linhas(self, cell: Cell):
         """Método para formatar tabela"""
         cell.font = Font(bold=True, color="000000")
         cell.border = Border(left=Side(style='thin'), right=Side(style='thin'),
@@ -66,8 +66,8 @@ class ExcelDados(Arquivo[Generator[Tuple[Cell, ...], None, None], List[str],  Wo
 
             for i, valor in enumerate(valores):
 
-                self.formatar_linhas(self.__planilha.active.cell(row=linha_para_escrever,
-                                                                 column=coluna_inicial + i, value=valor))
+                self.__formatar_linhas(self.__planilha.active.cell(row=linha_para_escrever,
+                                                                   column=coluna_inicial + i, value=valor))
             self.__ultima_linha = max(self.__ultima_linha, linha_para_escrever)
         except Exception as e:
             logger.critical(f'ERRO FATAL: {e}')
